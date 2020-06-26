@@ -1,0 +1,3 @@
+[submodule "client"]
+	path = client
+	url = https://github.com/danlopes-arc/mern-shopping-list-client.git
