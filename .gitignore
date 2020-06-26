@@ -116,5 +116,4 @@ dist
 .pnp.*
 
 # manual
-# /client
-keys.js
+keys-dev.js
