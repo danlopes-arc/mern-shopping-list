@@ -28,7 +28,7 @@ router.route('/')
     const token = jwt.sign(
       { id: newUser.id },
       process.env.JWT_SECRET,
-      { expiresIn: 60 }
+      { expiresIn: process.env.JWT_EXPIRATION_SECONDS }
     )
 
     return res.json({

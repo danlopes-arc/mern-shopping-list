@@ -1,4 +1,5 @@
 require('dotenv').config()
+process.env.JWT_EXPIRATION_SECONDS = 3600
 
 const express = require('express')
 const mongoose = require('mongoose')

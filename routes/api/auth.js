@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const auth = require('../../middleware/auth')
 
 const User = require('../../models/User')
 
@@ -26,7 +27,7 @@ router.route('/')
     const token = jwt.sign(
       { id: user.id },
       process.env.JWT_SECRET,
-      { expiresIn: 60 }
+      { expiresIn: parseInt(process.env.JWT_EXPIRATION_SECONDS) }
     )
 
     return res.json({
@@ -36,6 +37,13 @@ router.route('/')
         token
       }
     })
+  })
+
+router.route('/user')
+  .get(auth, async (req, res) => {
+    const user = await User.findById(req.user.id)
+      .select('-password')
+    return res.json(user)
   })
 
 module.exports = router
