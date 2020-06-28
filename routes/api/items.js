@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const { delay } = require('../../helpers/helpers')
+const auth = require('../../middleware/auth')
 
 const Item = require('../../models/Item')
 
@@ -17,13 +18,13 @@ router.route('/')
         }
     })
 
-    .post(async (req, res) => {
+    .post(auth, async (req, res) => {
         try {
             const newItem = await new Item({
                 name: req.body.name
             }).save()
 
-            res.json(newItem)
+            return res.json(newItem)
             
         } catch (err) {
             console.log(err)
@@ -32,14 +33,14 @@ router.route('/')
     })
 
 router.route('/:id')
-    .delete(async (req, res) => {
+    .delete(auth, async (req, res) => {
         try {
             const item = await Item.findById(req.params.id)
             
             if (item == null) return res.sendStatus(404)
 
             await item.remove()
-            res.json({_id: req.params.id})
+            return res.json({_id: req.params.id})
 
         } catch (err) {
             console.error(err);
