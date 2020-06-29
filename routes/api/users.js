@@ -32,10 +32,10 @@ router.route('/')
     )
 
     return res.json({
+      token,
       user: {
         name,
-        email,
-        token
+        email
       }
     })
   })
